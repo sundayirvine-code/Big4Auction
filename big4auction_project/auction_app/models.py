@@ -171,3 +171,24 @@ class Feedback(models.Model):
 
     def __str__(self):
         return f'Feedback #{self.FeedbackID} from {self.user.username}'
+    
+class Report(models.Model):
+    """
+    Represents a report filed by a user against another user or item.
+
+    Attributes:
+        reporter (ForeignKey to User): Reference to the user who filed the report.
+        reported_user (ForeignKey to User): Reference to the user who is being reported.
+        item (ForeignKey to Item): Reference to the item involved in the report.
+        report_description (TextField): Description of the report.
+        timestamp (DateTimeField): Date and time when the report was filed.
+    """
+
+    reporter = models.ForeignKey('User', related_name='reported_by', on_delete=models.CASCADE)
+    reported_user = models.ForeignKey('User', related_name='reported_user', on_delete=models.CASCADE)
+    item = models.ForeignKey('Item', on_delete=models.CASCADE, null=True, blank=True)
+    report_description = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Report #{self.id} by {self.reporter.username} against {self.reported_user.username}'
