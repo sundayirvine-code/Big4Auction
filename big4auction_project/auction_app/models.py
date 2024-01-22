@@ -59,6 +59,7 @@ class Item(models.Model):
     Attributes:
         seller (ForeignKey to User): Reference to the user who is selling the item.
         title (CharField): Title of the item.
+        slug (SlugField): SEO-friendly URL slug for the item.
         description (TextField): Description of the item.
         category (ForeignKey to Category): Reference to the category of the item.
         start_time (DateTimeField): Date and time when the item listing starts.
@@ -69,9 +70,6 @@ class Item(models.Model):
         current_bid (DecimalField): Current highest bid for the item.
         image_url (URLField): URL to the image of the item.
         status (CharField): Status of the item (active, expired, sold).
-
-    Note:
-        The `status` field is represented using a CharField with choices to emulate an enum-like behavior.
     """
 
     STATUS_CHOICES = [
