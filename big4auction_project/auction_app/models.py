@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models.fields import ArrayField
 
 class PaymentMethod(models.Model):
     """
@@ -69,7 +68,6 @@ class Item(models.Model):
         starting_bid (DecimalField): Starting bid for the item.
         reserve_price (DecimalField): Reserve price for the item.
         current_bid (DecimalField): Current highest bid for the item.
-        image_urls (ArrayField): Array of URLs to the images of the item.
         status (CharField): Status of the item (active, expired, sold).
     """
 
@@ -90,12 +88,26 @@ class Item(models.Model):
     starting_bid = models.DecimalField(max_digits=10, decimal_places=2)
     reserve_price = models.DecimalField(max_digits=10, decimal_places=2)
     current_bid = models.DecimalField(max_digits=10, decimal_places=2)
-    image_urls = models.ArrayField(models.URLField())
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
 
     def __str__(self):
         return self.title
-    
+
+class ItemImage(models.Model):
+    """
+    Represents an image associated with an auction item.
+
+    Attributes:
+        item (ForeignKey to Item): Reference to the auction item.
+        image_url (URLField): URL to the image of the item.
+    """
+
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='images')
+    image_url = models.URLField()
+
+    def __str__(self):
+        return f'Image #{self.pk} for {self.item.title}'
+        
 class Bid(models.Model):
     """
     Represents a bid placed on an item.
