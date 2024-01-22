@@ -102,21 +102,19 @@ class Bid(models.Model):
     Represents a bid placed on an item.
 
     Attributes:
-        bid_id (AutoField, Primary Key): Unique identifier for the bid.
         bidder (ForeignKey to User): Reference to the user who placed the bid.
         item (ForeignKey to Item): Reference to the item on which the bid is placed.
         bid_amount (DecimalField): Amount of the bid.
         bid_time (DateTimeField): Date and time when the bid was placed.
     """
 
-    bid_id = models.AutoField(primary_key=True)
     bidder = models.ForeignKey('User', on_delete=models.CASCADE)
     item = models.ForeignKey('Item', on_delete=models.CASCADE)
     bid_amount = models.DecimalField(max_digits=10, decimal_places=2)
     bid_time = models.DateTimeField()
 
     def __str__(self):
-        return f'Bid #{self.bid_id} on {self.item.title} by {self.bidder.username}'
+        return f'Bid #{self.id} on {self.item.title} by {self.bidder.username}'
     
 class Transaction(models.Model):
     """
