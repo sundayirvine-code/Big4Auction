@@ -91,7 +91,10 @@ class Item(models.Model):
     starting_bid = models.DecimalField(max_digits=10, decimal_places=2)
     reserve_price = models.DecimalField(max_digits=10, decimal_places=2)
     current_bid = models.DecimalField(max_digits=10, decimal_places=2)
-    image_url = models.URLField()
+    image_url1 = models.URLField()
+    image_url2 = models.URLField()
+    image_url3 = models.URLField()
+    image_url4 = models.URLField()
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
 
     def __str__(self):
