@@ -115,4 +115,29 @@ class Transaction(models.Model):
     def __str__(self):
         return f'Transaction #{self.transaction_id} - {self.buyer.username} bought {self.item.title} from {self.seller.username}'
     
-    
+class Notification(models.Model):
+    """
+    Represents a notification for a user.
+
+    Attributes:
+        notification_id (AutoField, Primary Key): Unique identifier for the notification.
+        user (ForeignKey to User): Reference to the user who receives the notification.
+        message (TextField): Content of the notification message.
+        timestamp (DateTimeField): Date and time when the notification was created.
+        read_status (CharField): Status indicating whether the notification has been read or unread.
+            Possible values are 'unread' and 'read'.
+    """
+
+    READ_STATUS_CHOICES = [
+        ('unread', 'Unread'),
+        ('read', 'Read'),
+    ]
+
+    notification_id = models.AutoField(primary_key=True)
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    message = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    read_status = models.CharField(max_length=10, choices=READ_STATUS_CHOICES, default='unread')
+
+    def __str__(self):
+        return f'Notification #{self.notification_id} for {self.user.username}'  
