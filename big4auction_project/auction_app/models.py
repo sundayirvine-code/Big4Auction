@@ -162,7 +162,7 @@ class Notification(models.Model):
     read_status = models.CharField(max_length=10, choices=READ_STATUS_CHOICES, default='unread')
 
     def __str__(self):
-        return f'Notification #{self.notification_id} for {self.user.username}' 
+        return f'Notification #{self.id} for {self.user.username}' 
     
 class Feedback(models.Model):
     """
