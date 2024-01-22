@@ -181,7 +181,7 @@ class Feedback(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Feedback #{self.FeedbackID} from {self.user.username}'
+        return f'Feedback #{self.id} from {self.user.username}'
     
 class Report(models.Model):
     """
