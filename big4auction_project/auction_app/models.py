@@ -86,6 +86,7 @@ class Item(models.Model):
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
+    created = models.DateTimeField(auto_now_add=True)
     starting_bid = models.DecimalField(max_digits=10, decimal_places=2)
     reserve_price = models.DecimalField(max_digits=10, decimal_places=2)
     current_bid = models.DecimalField(max_digits=10, decimal_places=2)
