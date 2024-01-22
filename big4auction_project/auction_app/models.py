@@ -1,5 +1,31 @@
 from django.db import models
 
+class PaymentMethod(models.Model):
+    """
+    Represents a payment method available in the system.
+
+    Attributes:
+        method (CharField): Name or description of the payment method.
+    """
+
+    method = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.method
+    
+class Category(models.Model):
+    """
+    Represents a category for items.
+
+    Attributes:
+        category_name (CharField): Name of the category.
+    """
+
+    category_name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.category_name 
+    
 class User(models.Model):
     """
     Represents a user in the system.
@@ -139,19 +165,6 @@ class Notification(models.Model):
 
     def __str__(self):
         return f'Notification #{self.notification_id} for {self.user.username}' 
-
-class Category(models.Model):
-    """
-    Represents a category for items.
-
-    Attributes:
-        category_name (CharField): Name of the category.
-    """
-
-    category_name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.category_name 
     
 class Feedback(models.Model):
     """
@@ -192,16 +205,3 @@ class Report(models.Model):
 
     def __str__(self):
         return f'Report #{self.id} by {self.reporter.username} against {self.reported_user.username}'
-    
-class PaymentMethod(models.Model):
-    """
-    Represents a payment method available in the system.
-
-    Attributes:
-        method (CharField): Name or description of the payment method.
-    """
-
-    method = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.method
