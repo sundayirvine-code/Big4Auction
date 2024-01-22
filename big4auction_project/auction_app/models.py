@@ -192,3 +192,16 @@ class Report(models.Model):
 
     def __str__(self):
         return f'Report #{self.id} by {self.reporter.username} against {self.reported_user.username}'
+    
+class PaymentMethod(models.Model):
+    """
+    Represents a payment method available in the system.
+
+    Attributes:
+        method (CharField): Name or description of the payment method.
+    """
+
+    method = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.method
