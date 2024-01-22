@@ -120,7 +120,6 @@ class Notification(models.Model):
     Represents a notification for a user.
 
     Attributes:
-        notification_id (AutoField, Primary Key): Unique identifier for the notification.
         user (ForeignKey to User): Reference to the user who receives the notification.
         message (TextField): Content of the notification message.
         timestamp (DateTimeField): Date and time when the notification was created.
@@ -139,4 +138,17 @@ class Notification(models.Model):
     read_status = models.CharField(max_length=10, choices=READ_STATUS_CHOICES, default='unread')
 
     def __str__(self):
-        return f'Notification #{self.notification_id} for {self.user.username}'  
+        return f'Notification #{self.notification_id} for {self.user.username}' 
+
+class Category(models.Model):
+    """
+    Represents a category for items.
+
+    Attributes:
+        category_name (CharField): Name of the category.
+    """
+
+    category_name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.category_name 
