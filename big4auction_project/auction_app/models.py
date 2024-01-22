@@ -152,3 +152,22 @@ class Category(models.Model):
 
     def __str__(self):
         return self.category_name 
+    
+class Feedback(models.Model):
+    """
+    Represents feedback provided by users.
+
+    Attributes:
+        user (ForeignKey to User): Reference to the user who provided the feedback.
+        rating (IntegerField): Rating given by the user.
+        comment (TextField): Comment or additional information provided by the user.
+        timestamp (DateTimeField): Date and time when the feedback was submitted.
+    """
+
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    rating = models.IntegerField()
+    comment = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Feedback #{self.FeedbackID} from {self.user.username}'
