@@ -63,6 +63,7 @@ class Item(models.Model):
         category (ForeignKey to Category): Reference to the category of the item.
         start_time (DateTimeField): Date and time when the item listing starts.
         end_time (DateTimeField): Date and time when the item listing ends.
+        created (DateTimeField): Date and time when the item listing was created.
         starting_bid (DecimalField): Starting bid for the item.
         reserve_price (DecimalField): Reserve price for the item.
         current_bid (DecimalField): Current highest bid for the item.
