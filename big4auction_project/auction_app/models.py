@@ -89,3 +89,30 @@ class Bid(models.Model):
 
     def __str__(self):
         return f'Bid #{self.bid_id} on {self.item.title} by {self.bidder.username}'
+    
+class Transaction(models.Model):
+    """
+    Represents a transaction between a buyer and a seller for a specific item.
+
+    Attributes:
+        transaction_id (AutoField, Primary Key): Unique identifier for the transaction.
+        buyer (ForeignKey to User): Reference to the user who is the buyer in the transaction.
+        seller (ForeignKey to User): Reference to the user who is the seller in the transaction.
+        item (ForeignKey to Item): Reference to the item involved in the transaction.
+        transaction_date (DateTimeField): Date and time when the transaction occurred.
+        transaction_amount (DecimalField): Amount of the transaction.
+        payment_method (ForeignKey to PaymentMethod): Reference to the payment method used in the transaction.
+    """
+
+    transaction_id = models.AutoField(primary_key=True)
+    buyer = models.ForeignKey('User', related_name='buyer_transactions', on_delete=models.CASCADE)
+    seller = models.ForeignKey('User', related_name='seller_transactions', on_delete=models.CASCADE)
+    item = models.ForeignKey('Item', on_delete=models.CASCADE)
+    transaction_date = models.DateTimeField()
+    transaction_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_method = models.ForeignKey('PaymentMethod', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Transaction #{self.transaction_id} - {self.buyer.username} bought {self.item.title} from {self.seller.username}'
+    
+    
