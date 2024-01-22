@@ -111,7 +111,7 @@ class Bid(models.Model):
     bidder = models.ForeignKey('User', on_delete=models.CASCADE)
     item = models.ForeignKey('Item', on_delete=models.CASCADE)
     bid_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    bid_time = models.DateTimeField()
+    bid_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'Bid #{self.id} on {self.item.title} by {self.bidder.username}'
