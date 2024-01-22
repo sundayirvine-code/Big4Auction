@@ -115,7 +115,7 @@ class Bid(models.Model):
     bid_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Bid #{self.id} on {self.item.title} by {self.bidder.username}'
+        return f'Bid #{self.pk} on {self.item.title} by {self.bidder.username}'
     
 class Transaction(models.Model):
     """
@@ -138,7 +138,7 @@ class Transaction(models.Model):
     payment_method = models.ForeignKey('PaymentMethod', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'Transaction #{self.id} - {self.buyer.username} bought {self.item.title} from {self.seller.username}'
+        return f'Transaction #{self.pk} - {self.buyer.username} bought {self.item.title} from {self.seller.username}'
     
 class Notification(models.Model):
     """
@@ -163,7 +163,7 @@ class Notification(models.Model):
     read_status = models.CharField(max_length=10, choices=READ_STATUS_CHOICES, default='unread')
 
     def __str__(self):
-        return f'Notification #{self.id} for {self.user.username}' 
+        return f'Notification #{self.pk} for {self.user.username}' 
     
 class Feedback(models.Model):
     """
@@ -182,7 +182,7 @@ class Feedback(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Feedback #{self.id} from {self.user.username}'
+        return f'Feedback #{self.pk} from {self.user.username}'
     
 class Report(models.Model):
     """
@@ -203,4 +203,4 @@ class Report(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Report #{self.id} by {self.reporter.username} against {self.reported_user.username}'
+        return f'Report #{self.pk} by {self.reporter.username} against {self.reported_user.username}'
