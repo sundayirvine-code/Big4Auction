@@ -31,9 +31,9 @@ class ItemAdmin(admin.ModelAdmin):
     inlines = [ItemImageInline, BidInline, TransactionInline]
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'email', 'full_name', 'phone_number', 'registration_date')
+    list_display = ('username', 'email', 'phone_number')
     search_fields = ('username', 'email')
-    list_filter = ('registration_date',)
+    #list_filter = ('registration_date',)
 
 # Registering the models with the customized admin classes
 admin.site.register(Item, ItemAdmin)
