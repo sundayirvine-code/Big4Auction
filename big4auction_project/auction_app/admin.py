@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import *
+from .models import Item, ItemImage, Bid, Transaction, Notification, Feedback, Report, PaymentMethod, Category, User
+
 
 class ItemImageInline(admin.TabularInline):
     model = ItemImage

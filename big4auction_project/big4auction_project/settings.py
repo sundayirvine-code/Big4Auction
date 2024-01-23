@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'big4auction_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'auction',
+        'NAME': 'big4auction',
         'USER': 'root',
         'PASSWORD': 'I$a80899819',
         'PORT': 3306,
