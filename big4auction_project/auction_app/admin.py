@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import Item, ItemImage, Bid, Transaction, Notification, Feedback, Report, PaymentMethod, Category, User
 
 
@@ -31,9 +32,27 @@ class ItemAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug':('title',)}
     inlines = [ItemImageInline, BidInline, TransactionInline]
 
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'email', 'phone_number', 'registration_date')
+class UserAdmin(BaseUserAdmin):
+    #add_form = CustomUserCreationForm
+    #form = CustomUserChangeForm
+    model = User
+
+    list_display = ('username', 'email', 'phone_number', 'date_joined', 'is_staff', 'is_superuser')
     search_fields = ('username', 'email')
+
+    fieldsets = (
+        (None, {'fields': ('username', 'email', 'password')}),
+        ('Personal Info', {'fields': ('address', 'phone_number')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+    )
+
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'email', 'password1', 'password2', 'address', 'phone_number', 'is_active', 'is_staff', 'is_superuser'),
+        }),
+    )
 
 # Registering the models with the customized admin classes
 admin.site.register(Item, ItemAdmin)
