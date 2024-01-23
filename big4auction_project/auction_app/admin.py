@@ -24,7 +24,7 @@ class ReportAdmin(admin.ModelAdmin):
     list_filter = ('timestamp',)
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('title', 'seller', 'start_time', 'end_time', 'current_bid', 'status')
+    list_display = ('title', 'start_time', 'end_time', 'current_bid', 'status')
     search_fields = ('title', 'seller__username')
     list_filter = ('status', 'category')
     prepopulated_fields = {'slug':('title',)}
