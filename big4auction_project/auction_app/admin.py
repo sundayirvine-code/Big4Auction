@@ -33,8 +33,6 @@ class ItemAdmin(admin.ModelAdmin):
     inlines = [ItemImageInline, BidInline, TransactionInline]
 
 class UserAdmin(BaseUserAdmin):
-    #add_form = CustomUserCreationForm
-    #form = CustomUserChangeForm
     model = User
 
     list_display = ('username', 'email', 'phone_number', 'date_joined', 'is_staff', 'is_superuser')
