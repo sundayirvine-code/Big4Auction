@@ -31,6 +31,22 @@ class ItemModelTest(TestCase):
         for status, _ in Item.STATUS_CHOICES:
             self.assertIn(status, ['active', 'expired', 'sold'])
 
+    def test_item_default_status(self):
+        # Ensure that the default status is 'active'
+        item = Item.objects.create(
+            title='Test Default Status',
+            slug='test-default-status',
+            description='This is a test item with default status.',
+            category=Category.objects.create(category_name='Test Default Status Category'),
+            start_time=timezone.now(),
+            end_time=timezone.now() + timezone.timedelta(days=7),
+            created=timezone.now(),
+            starting_bid=10.00,
+            reserve_price=20.00,
+            current_bid=15.00,
+        )
+        self.assertEqual(item.status, 'active')
+
     '''def test_item_absolute_url(self):
         expected_url = reverse('item_detail', kwargs={
             'year': self.item.created.year,
