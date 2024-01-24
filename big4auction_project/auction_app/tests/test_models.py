@@ -96,3 +96,11 @@ class ItemModelTest(TestCase):
     def test_item_category_relationship(self):
         # Test relationships with Category
         self.assertEqual(self.item.category.category_name, 'Test Category')
+
+    def test_item_category_cascade_delete(self):
+        # Test that deleting a category also deletes associated items
+        category = Category.objects.get(category_name='Test Category')
+        category.delete()
+        # Attempt to retrieve the item, expecting it not to exist
+        with self.assertRaises(Item.DoesNotExist):
+            Item.objects.get(pk=self.item.pk)
