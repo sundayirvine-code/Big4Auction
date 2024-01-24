@@ -51,10 +51,12 @@ class FeedbackModelTest(TestCase):
         Test that deleting a user also deletes associated feedback.
         """
         user_id = self.feedback.user.id
+        feedback_id = self.feedback.id
+
         self.feedback.user.delete()
 
         with self.assertRaises(Feedback.DoesNotExist):
-            Feedback.objects.get(pk=self.feedback.pk)
+            Feedback.objects.get(pk=feedback_id)
 
     def test_feedback_lifecycle(self):
         """
