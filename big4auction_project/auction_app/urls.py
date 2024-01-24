@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import CreateCheckoutSessionView
+from .views import CreateCheckoutSessionView, ProductLandingPageView
 
 urlpatterns = [
-    path('', ),
-     path('create-checkout-session/<pk>/', CreateCheckoutSessionView.as_view(), name='create-checkout-session')
+    path('', ProductLandingPageView.as_view(), name='landing-page'),
+    path('create-checkout-session/<pk>/', CreateCheckoutSessionView.as_view(), name='create-checkout-session')
 ]
