@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
 from django.core.exceptions import ValidationError
-from auction_app.models import Item, ItemImage, Bid, Transaction, Notification, Feedback, Report, PaymentMethod, Category, User
+from auction_app.models import Item, Category, User
 
 class ItemModelTest(TestCase):
     def setUp(self):
@@ -134,7 +134,7 @@ class ItemModelTest(TestCase):
         with self.assertRaises(Item.DoesNotExist):
             Item.objects.get(pk=item_id)
 
-'''def test_item_absolute_url(self):
+    '''def test_item_absolute_url(self):
         expected_url = reverse('item_detail', kwargs={
             'year': self.item.created.year,
             'month': self.item.created.month,
