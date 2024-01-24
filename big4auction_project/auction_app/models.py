@@ -69,7 +69,6 @@ class Item(models.Model):
         ('sold', 'Sold'),
     ]
 
-    #seller = models.ForeignKey('User', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=250)
     description = models.TextField()
