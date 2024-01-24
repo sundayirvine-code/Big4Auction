@@ -22,3 +22,6 @@ class ItemModelTest(TestCase):
             status='active',
         )
         self.item.save()
+
+    def test_item_str(self):
+        self.assertEqual(str(self.item), 'Test Item')
