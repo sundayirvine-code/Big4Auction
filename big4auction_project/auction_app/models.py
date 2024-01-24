@@ -220,3 +220,6 @@ class Report(models.Model):
 
     def __str__(self):
         return f'Report #{self.pk} by {self.reporter.username} against {self.reported_user.username}'
+    
+    class Meta:
+        unique_together = ['reporter', 'reported_user']
