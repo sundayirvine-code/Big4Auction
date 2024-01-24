@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
+from django.core.exceptions import ValidationError
 from auction_app.models import Item, ItemImage, Bid, Transaction, Notification, Feedback, Report, PaymentMethod, Category, User
 
 class ItemModelTest(TestCase):
@@ -60,6 +61,27 @@ class ItemModelTest(TestCase):
         self.assertEqual(self.item.reserve_price, 20.00)
         self.assertEqual(self.item.current_bid, 15.00)
         self.assertEqual(self.item.status, 'active')
+
+    def test_item_validation(self):
+        # Test validation
+        invalid_item = Item(
+            title='',  # Title is required
+            slug='invalid-item',
+            description='This is an invalid item.',
+            category=Category.objects.create(category_name='Invalid Category'),
+            start_time=timezone.now(),
+            end_time=timezone.now() + timezone.timedelta(days=7),
+            created=timezone.now(),
+            starting_bid=10.00,
+            reserve_price=20.00,
+            current_bid=15.00,
+            status='active',
+        )
+        with self.assertRaises(ValidationError) as context:
+            invalid_item.full_clean()
+
+        # Check that the error message for the blank title is present
+        self.assertIn('This field cannot be blank.', context.exception.error_dict['title'][0])
 
     '''def test_item_absolute_url(self):
         expected_url = reverse('item_detail', kwargs={
