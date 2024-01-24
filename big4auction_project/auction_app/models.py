@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.urls import reverse
 
 class PaymentMethod(models.Model):
     """
@@ -83,6 +84,18 @@ class Item(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def get_absolute_url(self):
+        """
+        Returns the canonical URL for the item.
+        """
+        return reverse('item_detail', kwargs={
+            'year': self.created.year,
+            'month': self.created.month,
+            'day': self.created.day,
+            'id': self.id,
+            'slug': self.slug,
+        })
 
 class ItemImage(models.Model):
     """
