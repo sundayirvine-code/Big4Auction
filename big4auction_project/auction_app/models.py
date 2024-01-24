@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.exceptions import ValidationError
 
 class PaymentMethod(models.Model):
     """
@@ -84,6 +85,10 @@ class Item(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def clean(self):
+        if self.reserve_price < self.starting_bid:
+            raise ValidationError("Reserve price must be greater than or equal to starting bid.")
     
     def get_absolute_url(self):
         """
