@@ -1,3 +1,4 @@
+# myapp/tests/test_models.py
 from django.test import TestCase
 from django.utils import timezone
 from django.core.exceptions import ValidationError
@@ -9,10 +10,14 @@ class UserModelTest(TestCase):
         """
         Set up test data for the User model.
         """
-        self.user = User.objects.create(
+        self.user = User.objects.create_user(
             username='testuser',
             address='Test Address',
             phone_number='1234567890',
+            first_name='Test',
+            last_name='User',
+            email='testuser@example.com',
+            password='securepassword',
         )
 
     def test_user_str(self):
@@ -32,9 +37,9 @@ class UserModelTest(TestCase):
         Test individual fields of the User model.
         """
         self.assertEqual(self.user.username, 'testuser')
-        self.assertEqual(self.user.first_name, '')
-        self.assertEqual(self.user.last_name, '')
-        self.assertEqual(self.user.email, '')
+        self.assertEqual(self.user.first_name, 'Test')
+        self.assertEqual(self.user.last_name, 'User')
+        self.assertEqual(self.user.email, 'testuser@example.com')
         self.assertEqual(self.user.address, 'Test Address')
         self.assertEqual(self.user.phone_number, '1234567890')
 
@@ -42,9 +47,13 @@ class UserModelTest(TestCase):
         """
         Test that the address field in User model is optional.
         """
-        user_without_address = User.objects.create(
+        user_without_address = User.objects.create_user(
             username='userwithoutaddress',
             phone_number='9876543210',
+            first_name='UserWithout',
+            last_name='Address',
+            email='userwithoutaddress@example.com',
+            password='securepassword',
         )
         self.assertIsNone(user_without_address.address)
 
@@ -74,3 +83,10 @@ class UserModelTest(TestCase):
         Test that the last_login field has no default value.
         """
         self.assertIsNone(self.user.last_login)
+
+    def test_user_password_hashing(self):
+        """
+        Test that the password is hashed during creation.
+        """
+        self.assertNotEqual(self.user.password, 'securepassword')
+        self.assertTrue(self.user.check_password('securepassword'))
