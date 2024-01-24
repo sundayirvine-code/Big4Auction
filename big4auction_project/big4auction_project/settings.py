@@ -129,6 +129,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'auction_app.User'
 
-# settings.py
-STRIPE_PUBLIC_KEY = 'pk_test_51OcA6yHh0BdD959JIQ4WxUE9UfzSAP3vYNL1UVCRdWR8jwZq0TRjMXKzYOjOBPqv1KgJr6o4AG2G5FngQlyeR94f00rnm3o2Mi'
-STRIPE_SECRET_KEY = 'sk_test_51OcA6yHh0BdD959JMFuAe2UsfnHgn5d2lX9j8XMi3UEzxOlFemRgemStmPBVYem74HseDpDuDZYnCn4FNFx1Xz8W00SEkUKk2Q'
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env
+load_dotenv()
+
+STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
+STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET')
