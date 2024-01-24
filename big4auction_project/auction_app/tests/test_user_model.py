@@ -62,3 +62,15 @@ class UserModelTest(TestCase):
 
         # Check that the error message for the blank username is present
         self.assertIn('This field cannot be blank.', context.exception.error_dict['username'][0])
+
+    def test_user_creation_date(self):
+        """
+        Test that the date_joined field is automatically filled during creation.
+        """
+        self.assertIsNotNone(self.user.date_joined)
+
+    def test_user_last_login(self):
+        """
+        Test that the last_login field has no default value.
+        """
+        self.assertIsNone(self.user.last_login)
