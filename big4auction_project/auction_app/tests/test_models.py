@@ -25,3 +25,13 @@ class ItemModelTest(TestCase):
 
     def test_item_str(self):
         self.assertEqual(str(self.item), 'Test Item')
+
+    '''def test_item_absolute_url(self):
+        expected_url = reverse('item_detail', kwargs={
+            'year': self.item.created.year,
+            'month': self.item.created.month,
+            'day': self.item.created.day,
+            'id': self.item.id,
+            'slug': self.item.slug,
+        })
+        self.assertEqual(self.item.get_absolute_url(), expected_url)'''
