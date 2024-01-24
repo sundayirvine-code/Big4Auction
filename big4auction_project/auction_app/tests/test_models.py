@@ -104,3 +104,26 @@ class ItemModelTest(TestCase):
         # Attempt to retrieve the item, expecting it not to exist
         with self.assertRaises(Item.DoesNotExist):
             Item.objects.get(pk=self.item.pk)
+
+    def test_item_lifecycle_with(self):
+        # Test item lifecycle (creation, modification, deletion)
+        initial_created_time = self.item.created
+        initial_start_time = self.item.start_time
+        initial_title = self.item.title
+
+        # Modify the item title
+        self.item.title = 'Modified Title'
+        self.item.save()
+
+        # Ensure modification timestamps remain unchanged
+        self.assertEqual(self.item.created, initial_created_time)
+        self.assertEqual(self.item.start_time, initial_start_time)
+        self.assertNotEqual(self.item.title, initial_title)
+
+        # Delete the item
+        item_id = self.item.id
+        self.item.delete()
+
+        # Attempt to retrieve the deleted item, expecting it not to exist
+        with self.assertRaises(Item.DoesNotExist):
+            Item.objects.get(pk=item_id)
