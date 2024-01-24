@@ -101,6 +101,14 @@ class Item(models.Model):
             'id': self.id,
             'slug': self.slug,
         })
+    
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                check=models.Q(start_time__lt=models.F('end_time')),
+                name='start_time_before_end_time'
+            ),
+        ]
 
 class ItemImage(models.Model):
     """
