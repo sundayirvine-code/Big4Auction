@@ -92,3 +92,7 @@ class ItemModelTest(TestCase):
             'slug': self.item.slug,
         })
         self.assertEqual(self.item.get_absolute_url(), expected_url)'''
+    
+    def test_item_category_relationship(self):
+        # Test relationships with Category
+        self.assertEqual(self.item.category.category_name, 'Test Category')
