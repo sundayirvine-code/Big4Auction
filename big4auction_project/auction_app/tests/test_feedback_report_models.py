@@ -29,7 +29,7 @@ class FeedbackModelTest(TestCase):
         """
         invalid_feedback = Feedback(
             user=None,  # User is required
-            rating=6,  # Rating should be between 1 and 5
+            rating=2,  
             comment='',  # Comment should not be empty
             timestamp=None,  # Timestamp is required
         )
@@ -39,6 +39,41 @@ class FeedbackModelTest(TestCase):
         self.assertIn('This field cannot be null.', context.exception.error_dict['user'][0])
         self.assertIn('This field cannot be blank.', context.exception.error_dict['comment'][0])
         self.assertNotIn('timestamp', context.exception.error_dict)
+
+    def test_feedback_rating_validation(self):
+        """
+        Test validation of the Feedback model's rating field.
+        """
+        # Valid rating
+        feedback_valid = Feedback(
+            user=self.user,
+            rating=4,
+            comment='This is a valid feedback.',
+            timestamp=timezone.now(),
+        )
+        feedback_valid.full_clean()  # Should not raise any ValidationError
+
+        # Invalid rating (less than 0)
+        feedback_invalid_low = Feedback(
+            user=self.user,
+            rating=-1,
+            comment='This rating is invalid.',
+            timestamp=timezone.now(),
+        )
+        with self.assertRaises(ValidationError) as context:
+            feedback_invalid_low.full_clean()
+        self.assertIn('Ensure this value is greater than or equal to 0.', context.exception.error_dict['rating'][0])
+
+        # Invalid rating (greater than 5)
+        feedback_invalid_high = Feedback(
+            user=self.user,
+            rating=6,
+            comment='This rating is also invalid.',
+            timestamp=timezone.now(),
+        )
+        with self.assertRaises(ValidationError) as context:
+            feedback_invalid_high.full_clean()
+        self.assertIn('Ensure this value is less than or equal to 5.', context.exception.error_dict['rating'][0])
 
     def test_feedback_relationships(self):
         """
