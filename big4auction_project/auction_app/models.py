@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 class PaymentMethod(models.Model):
     """
@@ -184,13 +185,15 @@ class Feedback(models.Model):
 
     Attributes:
         user (ForeignKey to User): Reference to the user who provided the feedback.
-        rating (IntegerField): Rating given by the user.
+        rating (IntegerField): Rating given by the user (values between 0 and 5).
         comment (TextField): Comment or additional information provided by the user.
         timestamp (DateTimeField): Date and time when the feedback was submitted.
     """
 
     user = models.ForeignKey('User', on_delete=models.CASCADE)
-    rating = models.IntegerField()
+    rating = models.IntegerField(
+        validators=[MinValueValidator(0), MaxValueValidator(5)]
+    )
     comment = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
