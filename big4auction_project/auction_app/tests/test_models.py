@@ -26,6 +26,11 @@ class ItemModelTest(TestCase):
     def test_item_str(self):
         self.assertEqual(str(self.item), 'Test Item')
 
+    def test_item_status_choices(self):
+        # Ensure that status choices are valid
+        for status, _ in Item.STATUS_CHOICES:
+            self.assertIn(status, ['active', 'expired', 'sold'])
+
     '''def test_item_absolute_url(self):
         expected_url = reverse('item_detail', kwargs={
             'year': self.item.created.year,
