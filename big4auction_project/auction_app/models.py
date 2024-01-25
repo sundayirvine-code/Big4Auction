@@ -37,13 +37,14 @@ class User(AbstractUser):
     Attributes:
         address (CharField, optional): Address of the user. Can be empty.
         phone_number (CharField): Phone number of the user.
+        stripe_customer_id (CharField, optional): Stripe customer ID.
     """
 
     address = models.CharField(max_length=255, null=False, blank=True, default='')
     phone_number = models.CharField(max_length=255, unique=True)
+    stripe_customer_id = models.CharField(max_length=255, null=True, blank=True, unique=True)
 
     def __str__(self):
-        return self.username
 
 class Item(models.Model):
     """
