@@ -12,7 +12,7 @@ STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET')
 
 stripe.api_key = STRIPE_SECRET_KEY
 
-# will serve as the registration page
+# will serve as the stripe card
 def get_setup_intent_page(request):
     return render(request, 'auction_app/index.html')
 
@@ -56,11 +56,28 @@ def webhook_received(request):
 
     if event["type"]== 'payment_method.attached':
         print('🔔 A PaymentMethod has successfully been saved to a Customer.')
+        # At this point, redirect to the register page and pass the ID of the Customer object. 
+        # This will be associated with the internal representation of a user.
+        # set up the register route, url and templates 
 
-        # At this point, associate the ID of the Customer object with your
-        # own internal representation of a customer, if you have one.
+        # Get the customer ID from the event
+        customer_id = event['data']['object']['customer']
 
-        #print('🔔 Customer successfully updated.')
+        # Now, you have the customer_id, and you can use it to retrieve the customer from Stripe
+        try:
+            customer = stripe.Customer.retrieve(customer_id)
+            print(f'🔔 Customer retrieved from Stripe: {customer_id}')
+            
+            # At this point, you can perform any additional logic with the retrieved customer data.
+            # For example, store it in your database or update user information.
+
+            # Redirect to the registration page with the ID of the Customer object.
+            #return redirect('registration', customer_id=customer.id)
+           
+        except stripe.error.StripeError as e:
+            print(f'❌ Error retrieving customer from Stripe: {e}')
+            # Handle the error, possibly redirect back to the registration page with an error message
+
 
     if event["type"] == 'setup_intent.setup_failed':
         print('🔔 A SetupIntent has failed the attempt to set up a PaymentMethod.')
