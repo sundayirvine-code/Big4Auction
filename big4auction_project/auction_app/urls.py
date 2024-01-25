@@ -1,7 +1,9 @@
 from django.urls import path
-from .views import CreateCheckoutSessionView, ProductLandingPageView
+from . import views
 
 urlpatterns = [
-    path('', ProductLandingPageView.as_view(), name='landing-page'),
-    path('create-checkout-session/<pk>/', CreateCheckoutSessionView.as_view(), name='create-checkout-session')
+    path('', views.get_setup_intent_page, name='get_setup_intent_page'),
+    path('public-key', views.get_publishable_key, name='get_publishable_key'),
+    path('create-setup-intent', views.create_setup_intent, name='create_setup_intent'),
+    path('webhook', views.webhook_received, name='webhook_received'),
 ]
