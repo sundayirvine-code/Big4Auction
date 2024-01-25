@@ -39,7 +39,7 @@ class User(AbstractUser):
         phone_number (CharField): Phone number of the user.
     """
 
-    address = models.CharField(max_length=255, null=True, blank=True)
+    address = models.CharField(max_length=255, null=False, blank=True, default='')
     phone_number = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
