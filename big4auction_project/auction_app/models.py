@@ -37,7 +37,6 @@ class User(AbstractUser):
     Attributes:
         address (CharField, optional): Address of the user. Can be empty.
         phone_number (CharField): Phone number of the user.
-        registration_date (DateTimeField): Date and time of user registration.
     """
 
     address = models.CharField(max_length=255, null=True, blank=True)

@@ -12,6 +12,7 @@ STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET')
 
 stripe.api_key = STRIPE_SECRET_KEY
 
+# will serve as the registration page
 def get_setup_intent_page(request):
     return render(request, 'auction_app/index.html')
 
@@ -50,7 +51,7 @@ def webhook_received(request):
     if event['type'] == 'setup_intent.created':
         print('🔔 A new SetupIntent was created.')
     
-    elif event["type"] == "setup_intent.succeeded":
+    if event["type"] == "setup_intent.succeeded":
         print('🔔 A SetupIntent has successfully set up a PaymentMethod for future use.')
 
     if event["type"]== 'payment_method.attached':
@@ -59,12 +60,11 @@ def webhook_received(request):
         # At this point, associate the ID of the Customer object with your
         # own internal representation of a customer, if you have one.
 
-        # Optional: update the Customer billing information with billing details from the PaymentMethod
-
         #print('🔔 Customer successfully updated.')
 
     if event["type"] == 'setup_intent.setup_failed':
         print('🔔 A SetupIntent has failed the attempt to set up a PaymentMethod.')
+        # redirect back to the registration page with the error message
 
 
     return JsonResponse({'status': 'success'})
