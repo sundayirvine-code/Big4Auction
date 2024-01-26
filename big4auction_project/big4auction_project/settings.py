@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'auction_app',
+    'crispy_forms',
+    "crispy_bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -146,3 +148,7 @@ SESSION_COOKIE_AGE = 1800  # seconds
 
 # Set session expiration to be refreshed on every request
 SESSION_SAVE_EVERY_REQUEST = True
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"

@@ -1,6 +1,8 @@
 <!--auction_app/login.html-->
 {% extends 'auction_app/base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
+
 {% block title %}Login{% endblock %}
 
 {% block content %}
@@ -14,7 +16,7 @@
     {% endif %}
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form|crispy }}
         <button type="submit">Login</button>
     </form>
 {% endblock %}
