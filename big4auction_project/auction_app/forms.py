@@ -11,7 +11,7 @@ class RegistrationForm(UserCreationForm):
     Attributes:
         email (forms.EmailField): Email field for the user.
     """
-    email = forms.EmailField(max_length=255, help_text='Required. Enter a valid email address.')
+    email = forms.EmailField(max_length=255)
 
     class Meta:
         model = User
