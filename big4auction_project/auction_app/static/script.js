@@ -54,7 +54,7 @@
           } else {
             // The PaymentMethod was successfully set up
             console.log('The PaymentMethod was successfully set up')
-            orderComplete(stripe, setupIntent.client_secret);
+            orderComplete(stripe, setupIntent.client_secret, setupIntent.customer);
           }
         });
     });
@@ -65,7 +65,6 @@
       method: "post",
       headers: {
         "Content-Type": "application/json",
-        //'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
       }
     })
       .then(function(response) {
@@ -74,10 +73,11 @@
       })
       .then(function(setupIntent) {
         console.log('the set up intent', setupIntent)
+        customerID = setupIntent.customer
         stripeElements(publicKey, setupIntent);
       });
   };
-  
+
   var getPublicKey = function() {
     return fetch("/public-key", {
       method: "get",
@@ -108,7 +108,7 @@
   };
   
   /* Shows a success / error message when the payment is complete */
-  var orderComplete = function(stripe, clientSecret) {
+  var orderComplete = function(stripe, clientSecret, customerID) {
     stripe.retrieveSetupIntent(clientSecret).then(function(result) {
       var setupIntent = result.setupIntent;
       var setupIntentJson = JSON.stringify(setupIntent, null, 2);
@@ -119,7 +119,11 @@
       setTimeout(function() {
         document.querySelector(".sr-result").classList.add("expand");
       }, 200);
-  
+
+      console.log(customerID)
+      // Redirect to the registration page with the customer ID
+      window.location.href = '/registration/' + customerID;
+
       changeLoadingState(false);
     });
   };

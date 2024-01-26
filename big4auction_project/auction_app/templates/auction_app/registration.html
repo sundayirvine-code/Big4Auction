@@ -7,13 +7,12 @@
 <body>
     <h2>User Registration</h2>
     
-    <form method="post">
+    <form method="post" action="{% url 'registration' customer_id %}">
         {% csrf_token %}
         
         {{ form.as_p }}
 
         <input type="hidden" name="customer_id" value="{{ customer_id }}">
-        
         <button type="submit">Register</button>
     </form>
 </body>
