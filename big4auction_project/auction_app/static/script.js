@@ -8,17 +8,17 @@
       base: {
         fontSize: "15px",
         color: "#32325d",
-        fontFamily:
-          "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+        fontFamily: "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
         fontSmoothing: "antialiased",
+        ':-webkit-autofill': {
+          color: '#fce883',
+        },
         "::placeholder": {
           color: "rgba(0,0,0,0.4)"
         }
       }
     };
-  
-    var card = elements.create("card", { style: style });
-  
+    var card = elements.create("card", { style: style});
     card.mount("#card-element");
   
     // Element focus ring
@@ -37,17 +37,15 @@
     button.addEventListener("click", function(event) {
       event.preventDefault();
       changeLoadingState(true);
-      var email = document.getElementById("email").value;
-      console.log(email)
   
       stripe.confirmCardSetup(setupIntent.client_secret, {
           payment_method: {
             card: card,
-            billing_details: { email: email }
           }
         })
         .then(function(result) {
           if (result.error) {
+            console.log('error occured', result.error.message)
             changeLoadingState(false);
             var displayError = document.getElementById("card-errors");
             displayError.textContent = result.error.message;
