@@ -18,7 +18,7 @@ stripe.api_key = STRIPE_SECRET_KEY
 
 
 def get_setup_intent_page(request):
-    return render(request, 'auction_app/index.html')
+    return render(request, 'auction_app/register-card.html')
 
 def get_publishable_key(request):
     return JsonResponse({'publicKey': STRIPE_PUBLIC_KEY})
